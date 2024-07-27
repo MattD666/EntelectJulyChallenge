@@ -20,6 +20,7 @@ public class TreeNode
    private int[] biomeValues = {1,14,28,42,57,71,85,100};
    
    private TreeNode top, bottom, left, right;
+   private ArrayList<TreeNode> ignoreNodes = new ArrayList<TreeNode>(); //ADDED
    
    public TreeNode(int x, int y, int biomeIndex, float quality){
       this.x = x;
@@ -104,38 +105,44 @@ public class TreeNode
    }
    
    public TreeNode checkSurroundingNodes(){
-      float maxvalue;
-      if (this.bottom.biomeIndex==-1){
-         maxvalue = -1;
-      }
-      else{
-       maxvalue= this.bottom.value();
-      }
-      TreeNode nextNode = this.bottom;
+      //Changed
+      float maxvalue = -1;
+      TreeNode nextNode = null;
 
-      if (!this.left.visited){
+      if ((!this.left.visited) && (!ignoreNodes.contains(this.left))){
           if ( this.left.value()>maxvalue){
               nextNode = this.left;
               maxvalue = this.left.value();
           }
       }
 
-      if (!this.right.visited){
+      if ((!this.right.visited) && (!ignoreNodes.contains(this.right))){
           if (this.right.value()>maxvalue){
               nextNode = this.right;
               maxvalue = this.right.value();
           }
       }
 
-      // if (!this.bottom.visited){
-//           if (this.bottom.value>maxvalue){
-//               nextNode = this.bottom;
-//               maxvalue = this.bottom.value();
-//           }
-//       }
+      if ((!this.top.visited) && (!ignoreNodes.contains(this.top))){
+         if (this.top.value()>maxvalue){
+             nextNode = this.top;
+             maxvalue = this.top.value();
+         }
+     }
+
+      if ((!this.bottom.visited) && (!ignoreNodes.contains(this.bottom))){
+          if (this.bottom.value>maxvalue){
+              nextNode = this.bottom;
+              maxvalue = this.bottom.value();
+          }
+      }
 
       return nextNode;
   }
 
+   //ADDED
+  public void blockNode(TreeNode node){
+      this.ignoreNodes.add(node);
+  }
    
 }

@@ -15,15 +15,19 @@ public class Planet
    int radius = 210;
    int days = 14770;
    int steps  = 3*this.days;
+   int stepCounter = 3*this.days; //ADDED
    ArrayList<TreeNode> nodes;
    ArrayList<TreeNode> northChildren;
    String path = "";
+   ArrayList<TreeNode> pathList = new ArrayList<TreeNode>(); //ADDED
    
   
    /**
       Construct a tree with only a root node.
    **/
    public Planet(){
+
+
       nodes = new ArrayList<TreeNode>();
       
       //READ IN FILE
@@ -171,6 +175,8 @@ public class Planet
          }
       }
       
+      this.pathList.add(bestNode); //ADDED
+
       System.out.println(bestNode);
       System.out.println(path);
       this.traverse(bestNode);
@@ -182,21 +188,34 @@ public class Planet
       if ( (node.getX()==this.southPole.getX()) && (node.getY()==this.southPole.getY())){
          return;
       }
-      if ( (node.getY()-this.southPole.getY()) == this.steps  ){
-         this.goToSouthPole(node);
-      }
+      // if ( (node.getY()-this.southPole.getY()) == this.steps  ){
+      //    this.goToSouthPole(node);
+      // }
       else{
       //Not going directly to south pole
       
          // System.out.println(bestNode.getTop());
          TreeNode bestNode = node.checkSurroundingNodes(); //Replace with method
-         
-         
-         
-         node.visit();
-         this.path = this.path +  ","+node.toString();
-         System.out.println(path);
-         this.traverse(bestNode);
+
+         //ADDED
+         if (bestNode==null || ((node.getY()+(radius+1))>this.stepCounter)){
+            TreeNode prevNode = this.pathList.get(this.pathList.size()-2);
+            TreeNode removedNode = this.pathList.remove(days);
+
+            prevNode.blockNode(removedNode);
+
+            System.out.println(this.pathList);
+            this.stepCounter++;
+            this.traverse(bestNode);
+         }
+         else{
+            this.pathList.add(bestNode);
+            node.visit();
+            this.path = this.path +  ","+node.toString();
+            System.out.println(path);
+            this.stepCounter--;  //ADDED
+            this.traverse(bestNode);
+         }
          
       
       }//END Not going directly to south pole

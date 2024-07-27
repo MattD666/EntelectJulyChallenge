@@ -45,9 +45,30 @@ public class TreeNode
    public float value(){
       return this.biomeValues[this.biomeIndex]*this.quality;
    }
+   
+   public void setTop(TreeNode node){
+      this.top = node;
+   }
       
+   public void setBottom(TreeNode node){
+      this.bottom = node;
+   }
+   
+   public void setLeft(TreeNode node){
+      this.left = node;
+   }
+   
+   public void setRight(TreeNode node){
+      this.right = node;
+   }
+   
+   public float getX(){
+      return this.x;
+      
+   }
 
-
-    
+   public float getY(){
+      return this.y;
+   }
    
 }

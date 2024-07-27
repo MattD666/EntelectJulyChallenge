@@ -109,28 +109,28 @@ public class TreeNode
       float maxvalue = -1;
       TreeNode nextNode = null;
 
-      if ((!this.left.visited) && (!ignoreNodes.contains(this.left))){
+      if ((!this.left.visited) || (!ignoreNodes.contains(this.left))){
           if ( this.left.value()>maxvalue){
               nextNode = this.left;
               maxvalue = this.left.value();
           }
       }
 
-      if ((!this.right.visited) && (!ignoreNodes.contains(this.right))){
+      if ((!this.right.visited) || (!ignoreNodes.contains(this.right))){
           if (this.right.value()>maxvalue){
               nextNode = this.right;
               maxvalue = this.right.value();
           }
       }
 
-      if ((!this.top.visited) && (!ignoreNodes.contains(this.top))){
+      if ((!this.top.visited) || (!ignoreNodes.contains(this.top))){
          if (this.top.value()>maxvalue){
              nextNode = this.top;
              maxvalue = this.top.value();
          }
      }
 
-      if ((!this.bottom.visited) && (!ignoreNodes.contains(this.bottom))){
+      if ((!this.bottom.visited) || (!ignoreNodes.contains(this.bottom))){
           if (this.bottom.value>maxvalue){
               nextNode = this.bottom;
               maxvalue = this.bottom.value();

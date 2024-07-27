@@ -71,4 +71,31 @@ public class TreeNode
       return this.y;
    }
    
+   public TreeNode checkSurroundingNodes(){
+      float maxvalue = 0;
+      TreeNode nextNode = null;
+
+      //if (!this.left.getVisited()){
+          if (this.left.value()>maxvalue){
+              nextNode = this.left;
+              maxvalue = this.left.value();
+          }
+      //}
+
+      //if (!this.right.visited){
+          if (this.right.value()>maxvalue){
+              nextNode = this.right;
+              maxvalue = this.right.value();
+          }
+      //}
+
+      //if (!this.down.visited){
+          if (this.bottom.value>maxvalue){
+              nextNode = this.bottom;
+              maxvalue = this.bottom.value();
+          }
+      //}
+
+      return nextNode;
+  }
 }

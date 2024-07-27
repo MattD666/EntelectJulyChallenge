@@ -14,7 +14,7 @@ public class TreeNode
    private int x,y;
    private int biomeIndex;
    private float quality;
-   private float value;
+   public float value;
    private boolean visited;
    
    private int[] biomeValues = {1,14,28,42,57,71,85,100};
@@ -52,6 +52,11 @@ public class TreeNode
   
    public float value(){
       return this.biomeValues[this.biomeIndex]*this.quality;
+   }
+
+   public void updateValue(){
+       float alpha = 0.2;
+       this.value += aplha*(this.bottom.value + this.top.value + this.right.value + this.left.value);
    }
    
    public void setTop(TreeNode node){

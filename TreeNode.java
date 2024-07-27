@@ -24,6 +24,8 @@ public class TreeNode
    public TreeNode(int x, int y, int biomeIndex, float quality){
       this.x = x;
       this.y = y;
+      this.biomeIndex = biomeIndex;
+      this.quality = quality;
       this.top = null;
       this.bottom = null;
       this.left = null;
@@ -102,7 +104,13 @@ public class TreeNode
    }
    
    public TreeNode checkSurroundingNodes(){
-      float maxvalue = this.bottom.value();
+      float maxvalue;
+      if (this.bottom.biomeIndex==-1){
+         maxvalue = -1;
+      }
+      else{
+       maxvalue= this.bottom.value();
+      }
       TreeNode nextNode = this.bottom;
 
       if (!this.left.visited){

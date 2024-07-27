@@ -12,8 +12,8 @@ public class Planet
 {
 
    TreeNode northPole, southPole;
-   int radius = 10;
-   int days = 37;
+   int radius = 210;
+   int days = 14770;
    int steps  = 3*this.days;
    ArrayList<TreeNode> nodes;
    ArrayList<TreeNode> northChildren;
@@ -29,7 +29,7 @@ public class Planet
       //READ IN FILE
       
       try {
-            File myObj = new File("1.txt");
+            File myObj = new File("4.txt");
             Scanner myReader = new Scanner(myObj);  
 
             while (myReader.hasNextLine()) {
@@ -108,6 +108,15 @@ public class Planet
 //         System.out.println(nodes.get(testIndex).getTop());   
 //         System.out.println(nodes.get(testIndex).getBottom()); 
       }
+      
+//    public void displayChildren(){
+//       System.out.println("Node: left, right, top, bottom");
+//       for (TreeNode node: nodes){
+//          System.out.println(String.format("%s: %s, %s, %s, %s", this.toString(), this.getLeft.toSTri));
+//          
+//       }
+//    
+//    }
    
    
    public void constructLevel(int start, int end){
@@ -131,8 +140,13 @@ public class Planet
             current.setTop(this.northPole);
             this.northChildren.add(current);
          }
-         else if (i>=((nodes.size()-1) - (radius*2+1)))
+         else if (i>=((nodes.size()-1) - (radius*2+1))){
             current.setBottom(this.southPole);
+            TreeNode topcurrent = nodes.get(i-(2*this.radius+1));
+            current.setTop(topcurrent);
+            topcurrent.setBottom(current);
+            
+            }
          else{
             TreeNode topcurrent = nodes.get(i-(2*this.radius+1));
             current.setTop(topcurrent);
@@ -165,7 +179,7 @@ public class Planet
    }
    
    public void traverse(TreeNode node){
-      if (node==this.southPole){
+      if ( (node.getX()==this.southPole.getX()) && (node.getY()==this.southPole.getY())){
          return;
       }
       if ( (node.getY()-this.southPole.getY()) == this.steps  ){
@@ -174,19 +188,23 @@ public class Planet
       else{
       //Not going directly to south pole
       
+         // System.out.println(bestNode.getTop());
          TreeNode bestNode = node.checkSurroundingNodes(); //Replace with method
+         
+         
          
          node.visit();
          this.path = this.path +  ","+node.toString();
-         this.traverse(bestNode);
          System.out.println(path);
+         this.traverse(bestNode);
+         
       
       }//END Not going directly to south pole
    
    }
    
    public void goToSouthPole(TreeNode node){
-      if ( node==this.southPole ){
+      if ( (node.getX()==this.southPole.getX()) && (node.getY()==this.southPole.getY())){
          return;
       }  
       else{
@@ -198,7 +216,7 @@ public class Planet
    
    public String getPath(){
    
-      return "[" + this.path + "]";
+      return "[" + this.path +","+ this.southPole.toString()+ "]";
    }
    
                
